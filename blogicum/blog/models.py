@@ -28,6 +28,7 @@ class Category(PublishedCreated):
         verbose_name='Описание'
     )
     slug = models.SlugField(
+        max_length=256,
         unique=True,
         help_text='Идентификатор страницы для URL; '
         'разрешены символы латиницы, '
@@ -73,7 +74,6 @@ class Post(PublishedCreated):
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='posts',
         verbose_name='Автор публикации'
     )
     location = models.ForeignKey(
@@ -81,7 +81,6 @@ class Post(PublishedCreated):
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
-        related_name='posts',
         verbose_name='Местоположение',
 
     )
@@ -89,7 +88,6 @@ class Post(PublishedCreated):
         Category,
         on_delete=models.SET_NULL,
         null=True,
-        related_name='posts',
         verbose_name='Категория'
     )
     image = models.ImageField(
@@ -99,6 +97,7 @@ class Post(PublishedCreated):
     )
 
     class Meta:
+        default_related_name = 'posts'
         verbose_name = 'публикация'
         verbose_name_plural = 'Публикации'
         ordering = ('-pub_date',)
@@ -115,12 +114,10 @@ class Comment(models.Model):
         Post,
         on_delete=models.CASCADE,
         verbose_name="Пост",
-        related_name='comments',
     )
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='comments',
         verbose_name='Автор публикации'
     )
     created_at = models.DateTimeField(
@@ -129,6 +126,7 @@ class Comment(models.Model):
     )
 
     class Meta:
+        default_related_name = 'comments'
         verbose_name = "комментарий"
         verbose_name_plural = "Комментарии"
         ordering = ('created_at',)
