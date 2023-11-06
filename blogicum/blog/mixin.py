@@ -4,7 +4,6 @@ from django.shortcuts import redirect
 from django.urls import reverse
 
 from .models import Comment, Post
-from .utils import filter_posts
 
 
 class CommentMixinView(LoginRequiredMixin, View):
@@ -16,7 +15,6 @@ class CommentMixinView(LoginRequiredMixin, View):
         if self.get_object().author != request.user:
             return redirect('blog:post_detail',
                             post_id=self.kwargs[self.pk_url_kwarg])
-        filter_posts(Post.objects.filter(pk=self.kwargs[self.pk_url_kwarg]))
         return super().dispatch(request, *args, **kwargs)
 
     def get_success_url(self):

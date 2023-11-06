@@ -8,18 +8,14 @@ class CommentEditForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ('text',)
-        widgets = {
-            'text': forms.Textarea({'rows': '3'})
-        }
 
 
 class PostEditForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        exclude = ('author', 'created_at')
+        exclude = ('author',)
         widgets = {
-            'text': forms.Textarea({'rows': '5'}),
             'pub_date': forms.DateTimeInput(
                 attrs={'type': 'datetime-local'},
                 format='%Y-%m-%d %H:%M',
