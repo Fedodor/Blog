@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import View
 from django.shortcuts import redirect
 from django.urls import reverse
+from django.views.generic import View
 
 from .models import Comment, Post
 
@@ -13,14 +13,19 @@ class CommentMixinView(LoginRequiredMixin, View):
 
     def dispatch(self, request, *args, **kwargs):
         if self.get_object().author != request.user:
-            return redirect('blog:post_detail',
-                            post_id=self.kwargs[self.pk_url_kwarg])
+            return redirect(
+                'blog:post_detail',
+                post_id=self.kwargs[self.pk_url_kwarg]
+            )
         return super().dispatch(request, *args, **kwargs)
 
     def get_success_url(self):
-        return reverse('blog:post_detail', kwargs={
-            'post_id': self.kwargs['post_id']
-        })
+        return reverse(
+            'blog:post_detail',
+            kwargs={
+                'post_id': self.kwargs['post_id']
+            }
+        )
 
 
 class PostMixinView(LoginRequiredMixin, View):
@@ -30,6 +35,8 @@ class PostMixinView(LoginRequiredMixin, View):
 
     def dispatch(self, request, *args, **kwargs):
         if self.get_object().author != self.request.user:
-            return redirect('blog:post_detail',
-                            post_id=self.kwargs[self.pk_url_kwarg])
+            return redirect(
+                'blog:post_detail',
+                post_id=self.kwargs[self.pk_url_kwarg]
+            )
         return super().dispatch(request, *args, **kwargs)

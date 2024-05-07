@@ -32,18 +32,24 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse('blog:profile', kwargs={
-            'username': self.request.user.username
-        })
+        return reverse(
+            'blog:profile',
+            kwargs={
+                'username': self.request.user.username
+            }
+        )
 
 
 class PostUpdateView(PostMixinView, UpdateView):
     form_class = PostEditForm
 
     def get_success_url(self):
-        return reverse('blog:post_detail', kwargs={
-            'post_id': self.kwargs[self.pk_url_kwarg]
-        })
+        return reverse(
+            'blog:post_detail',
+            kwargs={
+                'post_id': self.kwargs[self.pk_url_kwarg]
+            }
+        )
 
 
 class PostDeleteView(PostMixinView, DeleteView):
@@ -55,9 +61,12 @@ class PostDeleteView(PostMixinView, DeleteView):
         )
 
     def get_success_url(self):
-        return reverse('blog:profile', kwargs={
-            'username': self.request.user.username
-        })
+        return reverse(
+            'blog:profile',
+            kwargs={
+                'username': self.request.user.username
+            }
+        )
 
 
 class PostDetailView(DetailView):
@@ -87,8 +96,10 @@ class PostDetailView(DetailView):
         )
 
     def get_success_url(self):
-        return reverse('blog:post_detail',
-                       post_id=self.kwargs[self.pk_url_kwarg])
+        return reverse(
+            'blog:post_detail',
+            post_id=self.kwargs[self.pk_url_kwarg]
+        )
 
 
 class CategoryPostListView(HomePageListView):
@@ -149,9 +160,12 @@ class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
         return self.request.user
 
     def get_success_url(self):
-        return reverse('blog:profile', kwargs={
-            'username': self.request.user.username
-        })
+        return reverse(
+            'blog:profile',
+            kwargs={
+                'username': self.request.user.username
+            }
+        )
 
 
 class CommentCreateView(LoginRequiredMixin, CreateView):
@@ -172,9 +186,12 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse('blog:post_detail', kwargs={
-            'post_id': self.kwargs['post_id']
-        })
+        return reverse(
+            'blog:post_detail',
+            kwargs={
+                'post_id': self.kwargs['post_id']
+            }
+        )
 
 
 class CommentUpdateView(CommentMixinView, UpdateView):
